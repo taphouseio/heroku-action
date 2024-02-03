@@ -10,9 +10,6 @@ gitCredentials(inVars);
 createProcfile(inVars);
 loginHeroku();
 selectHerokuApp(inVars);
-addBuildpacks(inVars);
-addConfigs(inVars);
-addDynamicFiles(inVars);
 deploy(inVars);
 
 function gitCredentials({email}){
@@ -21,15 +18,7 @@ function gitCredentials({email}){
 }
 
 function deploy({useforce, branch,appdir}){
-
-  if (appdir === "") {
-    execComm(`git push heroku ${branch}:refs/heads/master ${useforce? "--force" : ""}`);
-  } else {
-    execComm(
-      `git push ${useforce? "--force" : ""} heroku \`git subtree split --prefix=${appdir} ${branch}\`:refs/heads/master`
-    );
-  }
-  
+  execComm(`git push develop heroku`);
 }
 
 function addBuildpacks({buildpacks}){
@@ -52,13 +41,6 @@ function addBuildpacks({buildpacks}){
     
   }
 
-}
-
-function addDynamicFiles({ dynamicFiles }){
-  if(dynamicFiles){
-    execComm(`git add -A . && git commit -m "Added dynamic files"`);
-    console.log("Added dynamic files");
-  }
 }
 
 function addConfigs({ app_name, env_file, appdir }){
