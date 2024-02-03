@@ -18,7 +18,7 @@ function gitCredentials({email}){
 }
 
 function deploy({useforce, branch,appdir}){
-  execComm(`git push develop heroku`);
+  execComm(`git push heroku HEAD:${branch} ${useforce ? '--force': ''}`);
 }
 
 function addBuildpacks({buildpacks}){
